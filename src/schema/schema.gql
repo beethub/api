@@ -1,0 +1,64 @@
+directive @auth on FIELD | FIELD_DEFINITION
+directive @hasRole(role: [String]) on FIELD | FIELD_DEFINITION
+scalar MXCurrency
+scalar Upload
+type Receipt {
+  id: ID!
+  business: String
+  date: String
+  amount: MXCurrency
+  createdAt: String!
+  createdDate: String!
+  ticket: Ticket
+  invoice: Invoice
+  status: ReceiptStatus!
+}
+
+type Invoice {
+  xml: String!
+  pdf: String!
+}
+
+type Ticket {
+  url: String!
+}
+enum ReceiptStatus {
+  IN_PROGRESS
+  GENERATING
+  DONE
+  ERROR
+}
+
+type ReceiptConnection {
+  cursor: String!
+  hasMore: Boolean!
+  receipts: [Receipt]!
+}
+
+interface MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+}
+
+type MutationReceiptResponse implements MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  receipt: Receipt
+}
+
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
+type Query {
+  receipts(filter: String): [Receipt]! @auth
+  receipt(id: ID!): MutationReceiptResponse @auth
+}
+
+type Mutation {
+  createReceipt(file: Upload!): MutationReceiptResponse!
+}
