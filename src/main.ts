@@ -39,6 +39,10 @@ app.use( (req :Request, res: Response, next: NextFunction) => {
   next();
 });
 
+app.get("/ready", (req: Request, res:Response) =>{
+  res.send("ok");
+});
+
 server.applyMiddleware({ app });
 
 app.listen({ port: 4000 }, () =>
