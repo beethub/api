@@ -1,0 +1,155 @@
+
+Showing logs for build [32mbeethub-api-master-release-xvxgz-2[0m stage [32mfrom-build-pack[0m and container [32mstep-credential-initializer-jr8wf[0m
+{"level":"warn","ts":1587344972.3338509,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1587344972.3368993,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+
+Showing logs for build [32mbeethub-api-master-release-xvxgz-2[0m stage [32mfrom-build-pack[0m and container [32mstep-working-dir-initializer-qc6xq[0m
+{"level":"warn","ts":1587344972.788478,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1587344972.7904885,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
+
+Showing logs for build [32mbeethub-api-master-release-xvxgz-2[0m stage [32mfrom-build-pack[0m and container [32mstep-place-tools[0m
+
+Showing logs for build [32mbeethub-api-master-release-xvxgz-2[0m stage [32mfrom-build-pack[0m and container [32mstep-git-source-beethub-api-master-release-xvxgz-sk9jc[0m
+{"level":"warn","ts":1587344978.9376745,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1587344979.283979,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/beethub/api.git @ v0.0.2 in path /workspace/source"}
+
+Showing logs for build [32mbeethub-api-master-release-xvxgz-2[0m stage [32mfrom-build-pack[0m and container [32mstep-git-merge[0m
+Using SHAs from PULL_REFS=master:791f7d57de06533a5878475645778592f7cb9a6d
+WARNING: no SHAs to merge, falling back to initial cloned commit
+
+Showing logs for build [32mbeethub-api-master-release-xvxgz-2[0m stage [32mfrom-build-pack[0m and container [32mstep-setup-jx-git-credentials[0m
+Generated Git credentials file /workspace/xdg_config/git/credentials
+
+Showing logs for build [32mbeethub-api-master-release-xvxgz-2[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npmrc[0m
+Command "credential" is deprecated, it will be removed on Jun 1 2020.  This is replaced by Tekton's mounted secrets
+WARNING: failed to find Secret npm-token in namespace **
+
+Showing logs for build [32mbeethub-api-master-release-xvxgz-2[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npm-install[0m
+
+> chromedriver@81.0.0 install /workspace/source/node_modules/chromedriver
+> node install.js
+
+Current existing ChromeDriver binary is unavailable, proceeding with download and extraction.
+Downloading from file:  https://chromedriver.storage.googleapis.com/81.0.4044.69/chromedriver_linux64.zip
+Saving to file: /tmp/81.0.4044.69/chromedriver/chromedriver_linux64.zip
+Received 1040K...
+Received 2080K...
+Received 3120K...
+Received 4160K...
+Received 4840K total.
+Extracting zip contents.
+Copying to target path /workspace/source/node_modules/chromedriver/lib/chromedriver
+Fixing file permissions.
+Done. ChromeDriver binary available at /workspace/source/node_modules/chromedriver/lib/chromedriver/chromedriver
+
+> core-js@3.6.5 postinstall /workspace/source/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e)**"
+
+
+> core-js@2.6.11 postinstall /workspace/source/node_modules/fbjs/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e)**"
+
+
+> @apollo/protobufjs@1.0.3 postinstall /workspace/source/node_modules/@apollo/protobufjs
+> node scripts/postinstall
+
+
+> nodemon@2.0.3 postinstall /workspace/source/node_modules/nodemon
+> node bin/postinstall || exit 0
+
+[32mLove nodemon? You can now support the project via the open collective:[22m[39m
+ > [96m[1mhttps://opencollective.com/nodemon/donate[0m
+
+npm WARN api@1.0.0 No repository field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.1.2 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 872 packages from 592 contributors and audited 13509 packages in 33.094s
+found 0 vulnerabilities
+
+
+Showing logs for build [32mbeethub-api-master-release-xvxgz-2[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npm-test[0m
+
+> api@1.0.0 test /workspace/source
+> echo "DEBUG: no test specified" && exit 0
+
+DEBUG: no test specified
+
+Showing logs for build [32mbeethub-api-master-release-xvxgz-2[0m stage [32mfrom-build-pack[0m and container [32mstep-build-container-build[0m
+[36mINFO[0m[0000] Downloading base image node:10-slim          
+2020/04/20 01:10:19 No matching credentials were found, falling back on anonymous
+[36mINFO[0m[0000] Error while retrieving image from cache: getting file info: stat /workspace/sha256:1893c2b2f957b1718a0ea41f18fd8d8d2c869724f6e06cfb8cd889aa943b06be: no such file or directory 
+[36mINFO[0m[0000] Downloading base image node:10-slim          
+2020/04/20 01:10:19 No matching credentials were found, falling back on anonymous
+[36mINFO[0m[0000] cmd: EXPOSE                                  
+[36mINFO[0m[0000] Adding exposed port: 4000/tcp                
+[36mINFO[0m[0000] Using files from context: [/workspace/source/package-lock.json /workspace/source/package.json] 
+[36mINFO[0m[0000] Checking for cached layer docker.io/todo/cache:c8721a67a650073e9c594aeb102990b3fecf4a74c6fef6f96b809d04d02964ff... 
+2020/04/20 01:10:20 No matching credentials were found, falling back on anonymous
+[36mINFO[0m[0000] No cached layer found for cmd RUN npm install --production 
+[36mINFO[0m[0000] Unpacking rootfs as cmd RUN npm install --production requires it. 
+[36mINFO[0m[0006] Taking snapshot of full filesystem...        
+[36mINFO[0m[0008] ENV PORT 4000                                
+[36mINFO[0m[0008] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0008] EXPOSE 4000                                  
+[36mINFO[0m[0008] cmd: EXPOSE                                  
+[36mINFO[0m[0008] Adding exposed port: 4000/tcp                
+[36mINFO[0m[0008] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0008] WORKDIR /usr/src/app                         
+[36mINFO[0m[0008] cmd: workdir                                 
+[36mINFO[0m[0008] Changed working directory to /usr/src/app    
+[36mINFO[0m[0008] Creating directory /usr/src/app              
+[36mINFO[0m[0008] Taking snapshot of files...                  
+[36mINFO[0m[0008] ENV  NODE_ENV production                     
+[36mINFO[0m[0008] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0008] Using files from context: [/workspace/source/package-lock.json /workspace/source/package.json] 
+[36mINFO[0m[0008] COPY package-lock.json package.json ./       
+[36mINFO[0m[0008] Taking snapshot of files...                  
+[36mINFO[0m[0008] RUN npm install --production                 
+[36mINFO[0m[0008] cmd: /bin/sh                                 
+[36mINFO[0m[0008] args: [-c npm install --production]          
+
+> chromedriver@81.0.0 install /usr/src/app/node_modules/chromedriver
+> node install.js
+
+Current existing ChromeDriver binary is unavailable, proceeding with download and extraction.
+Downloading from file:  https://chromedriver.storage.googleapis.com/81.0.4044.69/chromedriver_linux64.zip
+Saving to file: /tmp/81.0.4044.69/chromedriver/chromedriver_linux64.zip
+Received 1040K...
+Received 2080K...
+Received 3120K...
+Received 4160K...
+Received 4840K total.
+Extracting zip contents.
+Copying to target path /usr/src/app/node_modules/chromedriver/lib/chromedriver
+Fixing file permissions.
+Done. ChromeDriver binary available at /usr/src/app/node_modules/chromedriver/lib/chromedriver/chromedriver
+
+> core-js@3.6.5 postinstall /usr/src/app/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e)**"
+
+[96mThank you for using core-js ([94m https://github.com/zloirock/core-js [96m) for polyfilling JavaScript standard library![0m
+
+[96mThe project needs your help! Please consider supporting of core-js on Open Collective or Patreon: [0m
+[96m>[94m https://opencollective.com/core-js [0m
+[96m>[94m https://www.patreon.com/zloirock [0m
+
+[96mAlso, the author of core-js ([94m https://github.com/zloirock [96m) is looking for a good job -)[0m
+
+
+> @apollo/protobufjs@1.0.3 postinstall /usr/src/app/node_modules/@apollo/protobufjs
+> node scripts/postinstall
+
+npm WARN api@1.0.0 No repository field.
+
+added 324 packages from 320 contributors and audited 13509 packages in 16.729s
+
+24 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+[36mINFO[0m[0027] Taking snapshot of full filesystem...        
+error building image: error building stage: lstat /workspace/source/dist: no such file or directory
+[31m
+Pipeline failed on stage 'from-build-pack' : container 'step-build-container-build'. The execution of the pipeline has stopped.[0m
