@@ -1,0 +1,27 @@
+
+Showing logs for build [32mmeta-beethub-api-master-release-zb8sj-4[0m stage [32mmeta-pipeline[0m and container [32mstep-credential-initializer-fsjs6[0m
+{"level":"warn","ts":1587346744.510798,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1587346744.5120664,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+
+Showing logs for build [32mmeta-beethub-api-master-release-zb8sj-4[0m stage [32mmeta-pipeline[0m and container [32mstep-working-dir-initializer-mm5zd[0m
+{"level":"warn","ts":1587346745.8566937,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1587346745.8619397,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
+
+Showing logs for build [32mmeta-beethub-api-master-release-zb8sj-4[0m stage [32mmeta-pipeline[0m and container [32mstep-place-tools[0m
+
+Showing logs for build [32mmeta-beethub-api-master-release-zb8sj-4[0m stage [32mmeta-pipeline[0m and container [32mstep-git-source-meta-beethub-api-master-release-zb8sj-rq72l[0m
+{"level":"warn","ts":1587346751.9323063,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1587346752.1990707,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/beethub/api.git @ c6d79ad153db49eddd97365320b9a16a97089530 in path /workspace/source"}
+
+Showing logs for build [32mmeta-beethub-api-master-release-zb8sj-4[0m stage [32mmeta-pipeline[0m and container [32mstep-git-merge[0m
+Using SHAs from PULL_REFS=master:c6d79ad153db49eddd97365320b9a16a97089530
+WARNING: no SHAs to merge, falling back to initial cloned commit
+
+Showing logs for build [32mmeta-beethub-api-master-release-zb8sj-4[0m stage [32mmeta-pipeline[0m and container [32mstep-merge-pull-refs[0m
+SKIP merge-pull-refs: Nothing to merge
+
+Showing logs for build [32mmeta-beethub-api-master-release-zb8sj-4[0m stage [32mmeta-pipeline[0m and container [32mstep-create-effective-pipeline[0m
+error: failed to create effective pipeline for release: validation failed for Pipeline: step names within a stage must be unique: stages[0].steps
+The following step names in the stage from-build-pack are used more than once: build-container-build, build-post-build, promote-changelog, promote-helm-release, promote-**-promote
+[31m
+Pipeline failed on stage 'meta-pipeline' : container 'step-create-effective-pipeline'. The execution of the pipeline has stopped.[0m
