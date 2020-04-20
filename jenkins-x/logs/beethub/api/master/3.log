@@ -1,0 +1,58 @@
+
+Showing logs for build [32mbeethub-api-master-release-6xz28-3[0m stage [32mfrom-build-pack[0m and container [32mstep-credential-initializer-5vc8r[0m
+{"level":"warn","ts":1587346291.3382268,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1587346291.339928,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+
+Showing logs for build [32mbeethub-api-master-release-6xz28-3[0m stage [32mfrom-build-pack[0m and container [32mstep-working-dir-initializer-cqxh5[0m
+{"level":"warn","ts":1587346291.761971,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1587346291.7644925,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
+
+Showing logs for build [32mbeethub-api-master-release-6xz28-3[0m stage [32mfrom-build-pack[0m and container [32mstep-place-tools[0m
+
+Showing logs for build [32mbeethub-api-master-release-6xz28-3[0m stage [32mfrom-build-pack[0m and container [32mstep-git-source-beethub-api-master-release-6xz28-9l4tn[0m
+{"level":"warn","ts":1587346299.022729,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1587346299.2977343,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/beethub/api.git @ v0.0.3 in path /workspace/source"}
+
+Showing logs for build [32mbeethub-api-master-release-6xz28-3[0m stage [32mfrom-build-pack[0m and container [32mstep-git-merge[0m
+Using SHAs from PULL_REFS=master:fd73d4362f4d5ec87ba6ccaa9d9c057d4f2b7373
+WARNING: no SHAs to merge, falling back to initial cloned commit
+
+Showing logs for build [32mbeethub-api-master-release-6xz28-3[0m stage [32mfrom-build-pack[0m and container [32mstep-setup-jx-git-credentials[0m
+Generated Git credentials file /workspace/xdg_config/git/credentials
+
+Showing logs for build [32mbeethub-api-master-release-6xz28-3[0m stage [32mfrom-build-pack[0m and container [32mstep-build-transpile-ts-to-js[0m
+
+> api@1.0.0 build /workspace/source
+> tsc && npm run copy-static-assets
+
+src/config.ts(2,13): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i @types/node`.
+src/config.ts(4,14): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i @types/node`.
+src/config.ts(5,10): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i @types/node`.
+src/dataSources/receipt.ts(1,32): error TS2307: Cannot find module 'apollo-datasource-rest'.
+src/generated/graphql.ts(1,80): error TS2307: Cannot find module 'graphql'.
+src/main.ts(1,67): error TS2307: Cannot find module 'express'.
+src/main.ts(2,31): error TS2307: Cannot find module 'apollo-server-express'.
+src/main.ts(5,22): error TS2307: Cannot find module 'keycloak-connect'.
+src/main.ts(6,33): error TS2307: Cannot find module 'keycloak-connect-graphql'.
+src/main.ts(19,15): error TS7031: Binding element 'req' implicitly has an 'any' type.
+src/schema.ts(1,30): error TS2307: Cannot find module 'graphql-import'.
+src/schema.ts(2,38): error TS2307: Cannot find module 'graphql-tools'.
+src/schema.ts(4,42): error TS2307: Cannot find module 'keycloak-connect-graphql'.
+src/schema.ts(5,18): error TS2307: Cannot find module 'path'.
+src/schema.ts(7,49): error TS2304: Cannot find name '__dirname'.
+src/schema/scalar/currencyMX.ts(1,60): error TS2307: Cannot find module 'graphql'.
+src/schema/scalar/currencyMX.ts(2,22): error TS2307: Cannot find module 'graphql/language'.
+src/schema/scalar/currencyMX.ts(26,16): error TS7006: Parameter 'ast' implicitly has an 'any' type.
+npm ERR! code ELIFECYCLE
+npm ERR! errno 2
+npm ERR! api@1.0.0 build: `tsc && npm run copy-static-assets`
+npm ERR! Exit status 2
+npm ERR! 
+npm ERR! Failed at the api@1.0.0 build script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+npm WARN Local package.json exists, but node_modules missing, did you mean to install?
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /builder/home/.npm/_logs/2020-04-20T01_31_47_914Z-debug.log
+[31m
+Pipeline failed on stage 'from-build-pack' : container 'step-build-transpile-ts-to-js'. The execution of the pipeline has stopped.[0m
