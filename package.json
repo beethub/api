@@ -9,7 +9,7 @@
     "start": "nodemon -e ts,gql --exec \"npm run dev\"",
     "predev": "npm run generate",
     "dev": "ts-node --files ./src/main.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"DEBUG: no test specified\" && exit 0",
     "generate": "graphql-codegen --config codegen.yml",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "test-schema": "ts-node --files ./src/schema.ts"
