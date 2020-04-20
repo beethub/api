@@ -8,5 +8,5 @@ WORKDIR /usr/src/app
 ENV  NODE_ENV production
 COPY package-lock.json package.json ./
 RUN npm install --production
-COPY ./dist .
+COPY dist/ .
 CMD ["node", "main.js"]

@@ -3,7 +3,6 @@ pipelineConfig:
   pipelines:
     release:
       build:
-        steps:
+        preSteps:
           - sh: npm run build
-            name: Transpile ts to js
-            
+            name: Transpile ts to js 
