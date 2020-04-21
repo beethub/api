@@ -40,16 +40,16 @@ spec:
         - containerPort: {{ .Values.service.internalPort }}
         livenessProbe:
           httpGet:
-            path: {{ .Values.probePath }}
-            port: {{ .Values.service.internalPort }}
+            path: {{ .Values.livenessProbe.path }}
+            port: {{ .Values.probePort }}
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
           successThreshold: {{ .Values.livenessProbe.successThreshold }}
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
         readinessProbe:
           httpGet:
-            path: {{ .Values.probePath }}
-            port: {{ .Values.service.internalPort }}
+            path: {{ .Values.readinessProbe.path }}
+            port: {{ .Values.probePort }}
           periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
           successThreshold: {{ .Values.readinessProbe.successThreshold }}
           timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}

@@ -1,20 +1,21 @@
 import express, { Express, NextFunction, Request, Response } from "express";
-import { ApolloServer  } from "apollo-server-express";
-import schema from "./schema";
-import ReceiptAPI from "./dataSources/receipt";
+import { ApolloServer } from "apollo-server-express";
 import Keycloak from "keycloak-connect";
 import { KeycloakContext } from "keycloak-connect-graphql";
+import { createLightship } from "lightship";
+import { Server } from "http";
+
 import { kcConfig } from "./config";
+import schema from "./schema";
+import ReceiptAPI from "./dataSources/receipt";
 
-const app : Express = express();
-
-console.log(kcConfig);
+const app: Express = express();
 
 const keycloak = new Keycloak({ scope: "openid" }, kcConfig as any);
 
 app.use(keycloak.middleware());
 
-const server: ApolloServer = new ApolloServer({
+const graphqlServer: ApolloServer = new ApolloServer({
   schema,
   context: ({ req }) => {
     return {
@@ -22,11 +23,11 @@ const server: ApolloServer = new ApolloServer({
     };
   },
   dataSources: () => ({
-    receiptApi: new ReceiptAPI()
-  })
+    receiptApi: new ReceiptAPI(),
+  }),
 });
 
-app.use( (req :Request, res: Response, next: NextFunction) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -36,18 +37,27 @@ app.use( (req :Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Methods", "POST, PUT, DELETE, GET");
     return res.status(200).json({});
   }
-  console.log(req.headers);
-  
+
   next();
 });
 
-app.get("/ready", (req: Request, res:Response) =>{
-  res.send("ok");
+graphqlServer.applyMiddleware({ app });
+
+const shutDownTime = 20 * 1000;
+
+const lightship = createLightship({shutdownHandlerTimeout: shutDownTime});
+
+const server: Server = app.listen({ port: 4000 }, () =>{
+  console.log(`🚀 Server ready at http://:4000${graphqlServer.graphqlPath}`);
+  lightship.signalReady();  
 });
 
-server.applyMiddleware({ app });
-
-app.listen({ port: 4000 }, () =>
-  console.log(`🚀 Server ready at http://:4000${server.graphqlPath}`)
-);
+lightship.registerShutdownHandler(async () => {
+  await new Promise((resolve, reject) =>{
+    setTimeout(() => {
+     resolve 
+    }, shutDownTime);
+  });
+  server.close();
+});
 

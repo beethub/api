@@ -58,17 +58,19 @@ resources:
   requests:
     cpu: 200m
     memory: 128Mi
-probePath: /ready
+probePort: 9000
 livenessProbe:
+  path: /live
   initialDelaySeconds: 60
-  periodSeconds: 10
+  periodSeconds: 30
   successThreshold: 1
-  timeoutSeconds: 1
+  timeoutSeconds: 5
 readinessProbe:
+  path: /ready
   failureThreshold: 1
   periodSeconds: 10
   successThreshold: 1
-  timeoutSeconds: 1
+  timeoutSeconds: 5
 
 
 # custom ingress annotations on this service
