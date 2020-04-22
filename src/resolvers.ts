@@ -1,8 +1,6 @@
 import {
   IResolvers,
-  MutationResolvers,
-  QueryReceiptsArgs,
-  RequireFields,
+  MutationResolvers
 } from "./generated/graphql";
 import MXCurrency from "./schema/scalar/currencyMX";
 import { QueryResolvers } from "./generated/graphql";

@@ -5,10 +5,11 @@
   "main": "main.ts",
   "scripts": {
     "build": "tsc && npm run copy-static-assets",
-    "compile": "npm run build && node ./dist/main.js",
+    "compile": "npm run build && node ./dist/server.js",
     "start": "nodemon -e ts,gql --exec \"npm run dev\"",
+    "debug": "nodemon --inspect ./src/server.ts",
     "predev": "npm run generate",
-    "dev": "ts-node --files ./src/main.ts",
+    "dev": "ts-node --files ./src/server.ts",
     "test": "echo \"DEBUG: no test specified\" && exit 0",
     "generate": "graphql-codegen --config codegen.yml",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
