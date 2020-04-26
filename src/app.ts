@@ -16,8 +16,9 @@ class App {
 
   private initializeMiddlewares(keycloak: Keycloak.Keycloak) {
     const fileCtl = new FileController();
-    this._app.use(keycloak.middleware());
     this._app.use(new Cors().router);
+    this._app.use(keycloak.middleware());
+    
     // @ts-ignore: 
     this._app.use(fileCtl.path, keycloak.protect(), fileCtl.router);
   }

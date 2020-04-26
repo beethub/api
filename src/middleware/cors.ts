@@ -17,6 +17,8 @@ class Cors {
       res.header("Access-Control-Allow-Methods", "POST, PUT, DELETE, GET");
       return res.status(200).json({});
     }
+    console.log(req.headers);
+    
     next();
   };
   
