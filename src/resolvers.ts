@@ -25,9 +25,16 @@ const Query: QueryResolvers<Context> = {
 const Mutation: MutationResolvers<Context> = {
   createReceipt: async (_, { file }, { dataSources: { receiptApi, fileDataSource } }: Context) => {
 
-    const path = await fileDataSource.storeFile("/ticket" + "/kster", file);
-    console.log(path);
-    receiptApi.addReceipt();
+    try {
+      //console.log(file);
+
+      const path = await fileDataSource.storeFile("/ticket" + "/kster", file);
+      console.log(path);
+      receiptApi.addReceipt();
+    }catch(error) {
+      console.error(error);
+    }
+
 
     return {
       code: "CODE",

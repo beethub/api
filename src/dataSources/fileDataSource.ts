@@ -63,7 +63,7 @@ class FileDataSource extends DataSource {
       });
     });
 
-    console.log(out);
+    //console.log(out);
     return out.url;
   }
 }
