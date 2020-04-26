@@ -26,7 +26,7 @@ const Mutation: MutationResolvers<Context> = {
   createReceipt: async (_, { file }, { dataSources: { receiptApi, fileDataSource } }: Context) => {
 
     try {
-      //console.log(file);
+      console.log(file);
 
       const path = await fileDataSource.storeFile("/ticket" + "/kster", file);
       console.log(path);
