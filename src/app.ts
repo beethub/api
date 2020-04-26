@@ -2,6 +2,7 @@ import express, { Express } from "express";
 import Cors from "./middleware/cors";
 import Keycloak from "keycloak-connect";
 import { Server } from "http";
+import FileController from "./controllers/fileController";
 
 class App {
   private _app: Express;
@@ -14,8 +15,11 @@ class App {
   }
 
   private initializeMiddlewares(keycloak: Keycloak.Keycloak) {
+    const fileCtl = new FileController();
     this._app.use(keycloak.middleware());
     this._app.use(new Cors().router);
+    // @ts-ignore: 
+    this._app.use(fileCtl.path, keycloak.protect(), fileCtl.router);
   }
 
   public get app() : Express {

@@ -73,6 +73,11 @@ class ReceiptAPI extends RESTDataSource {
       return response;
     });
   }
+
+  addReceipt() {
+     //console.log(file);
+  }
+
 }
 
 export default ReceiptAPI;

@@ -5,8 +5,9 @@ import { createLightship } from "lightship";
 
 import { kcConfig } from "./config";
 import schema from "./schema";
-import ReceiptAPI from "./dataSources/receipt";
+import ReceiptAPI from "./dataSources/receiptApi";
 import App from "./app";
+import FileDataSource from "./dataSources/fileDataSource";
 
 const keycloak: Keycloak.Keycloak = new Keycloak({ scope: "openid" }, kcConfig as any);
 
@@ -21,6 +22,7 @@ const graphqlServer: ApolloServer = new ApolloServer({
   },
   dataSources: () => ({
     receiptApi: new ReceiptAPI(),
+    fileDataSource: new FileDataSource()
   }),
 });
 
