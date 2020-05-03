@@ -10,6 +10,7 @@ image:
 # define environment variables here as a map of key: value
 env:
   FILE_URL: http://file
+  RECEIPT_URL: http://receipt-api
 
 # enable this flag to use knative serve to deploy the app
 knativeDeploy: false

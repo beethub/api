@@ -60,5 +60,5 @@ type Query {
 }
 
 type Mutation {
-  createReceipt(file: Upload!): MutationReceiptResponse!
+  createReceipt(file: Upload!): MutationReceiptResponse! @auth
 }

@@ -5,7 +5,7 @@ import { createLightship } from "lightship";
 
 import { kcConfig } from "./config";
 import schema from "./schema";
-import ReceiptAPI from "./dataSources/receiptApi";
+import ReceiptAPI from "./dataSources/receipts/receiptApi";
 import App from "./app";
 import FileDataSource from "./dataSources/fileDataSource";
 

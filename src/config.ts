@@ -6,5 +6,6 @@ export const kcConfig = {
 };
 
 export const services = {
-  fileUrl: process.env.FILE_URL || "http://localhost:5000"
+  fileUrl: process.env.FILE_URL || "http://localhost:5000",
+  receiptUrl: process.env.RECEIPT_URL || "http://localhost:8080"
 }

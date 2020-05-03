@@ -1,11 +1,76 @@
 import { RESTDataSource } from "apollo-datasource-rest";
-import { Receipt, ReceiptStatus } from "../generated/graphql";
+import { Receipt, ReceiptStatus } from "../../generated/graphql";
+import { services } from "../../config";
+import { IReceiptResponse, IReceipt, Ticket } from "./ReceiptTypes";
+import querystring from "querystring";
+
+
+const account = "kster";
 
 class ReceiptAPI extends RESTDataSource {
-  constructor(){
+  constructor() {
     super();
+    this.baseURL = services.receiptUrl;
   }
-  
+
+  async getReceipts(filter: string | null | undefined): Promise<Receipt[]> {
+    const filterQs: string = filter ? "?" + querystring.stringify({filter}) : "";
+    const receiptsResponse: IReceiptResponse = await this.get(`/receipt/${account}${filterQs}`);
+    return receiptsResponse.data.map((r) => ReceiptAPI.toReceipt(r));
+  }
+
+  async addReceipt(key: string) {
+    const body : Ticket = { key };
+    const receipt = await this.post(`/ticket/${account}`, body);
+
+    return ReceiptAPI.toReceipt(receipt);
+  }
+
+  private static toReceipt(receiptClient: IReceipt): Receipt {
+    const {
+      id,
+      business,
+      date,
+      amount,
+      createdAt,
+      ticket,
+      invoice,
+    } = receiptClient;
+    const t = ticket && ticket.key ? { url: ticket.key } : null;
+    const i =
+      invoice && (invoice.xml_key || invoice.pdf_key)
+        ? { xml: invoice.xml_key || null, pdf: invoice.pdf_key || null }
+        : null;
+    let status: ReceiptStatus;
+    switch (receiptClient.status) {
+      case "DONE":
+        status = ReceiptStatus.Done;
+        break;
+      case "ERROR":
+        status = ReceiptStatus.Error;
+        break;
+      case "GENERATING":
+        status = ReceiptStatus.Generating;
+        break;
+      default:
+        status = ReceiptStatus.InProgress;
+        break;
+    }
+
+    return {
+      id: id.toString(),
+      business: business || null,
+      date: date || null,
+      amount: amount || null,
+      createdAt: createdAt,
+      createdDate: createdAt.split("T")[0],
+      ticket: t,
+      invoice: i,
+      status,
+    };
+  }
+
+  /*
   getReceipts(filter: string) {
     return new Promise< Receipt[]>( (resolve, _reject) => {
       setTimeout(
@@ -73,11 +138,7 @@ class ReceiptAPI extends RESTDataSource {
       return response;
     });
   }
-
-  addReceipt() {
-     //console.log(file);
-  }
-
+  */
 }
 
 export default ReceiptAPI;
