@@ -66,6 +66,7 @@ const Mutation: MutationResolvers<Context> = {
       }
     }
     catch(error) {
+      console.error(error);
       return {
         code: "500",
         success: false,
@@ -84,6 +85,7 @@ const Mutation: MutationResolvers<Context> = {
       }
     }
     catch(error) {
+      console.error(error);
       return {
         code: "500",
         success: false,

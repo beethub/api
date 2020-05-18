@@ -50,10 +50,10 @@ type MutationInvoiceProfile implements MutationResponse {
 }
 
 extend type Query {
-  configuration: Configuration
+  configuration: Configuration @auth
 }
 
 extend type Mutation {
-  updateNotificationInvoiceResult(input: Boolean!): MutationConfigNotification
-  updateInvoiceProfile(input: InvoiceProfileInput!): MutationInvoiceProfile
+  updateNotificationInvoiceResult(input: Boolean!): MutationConfigNotification @auth
+  updateInvoiceProfile(input: InvoiceProfileInput!): MutationInvoiceProfile @auth
 }
