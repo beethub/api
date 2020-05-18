@@ -1,0 +1,58 @@
+type Receipt {
+  id: ID!
+  business: String
+  date: String
+  amount: MXCurrency
+  createdAt: String!
+  createdDate: String!
+  ticket: Ticket
+  invoice: Invoice
+  status: ReceiptStatus!
+}
+
+type Invoice {
+  xml: String!
+  pdf: String!
+}
+
+type Ticket {
+  url: String!
+}
+
+enum Responsable {
+  USER
+  SYSTEM
+}
+
+enum ReceiptStatus {
+  IN_PROGRESS
+  GENERATING
+  DONE
+  ERROR
+}
+
+input ReceiptFilter {
+  text: String
+  status: [ReceiptStatus]
+}
+
+type ReceiptResponse implements Response {
+  totalCount: Int!
+  receipts: [Receipt]!
+}
+
+type MutationReceiptResponse implements MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  receipt: Receipt
+}
+
+extend type Query {
+  receipts(input: ReceiptFilter): ReceiptResponse! @auth
+  receipt(id: ID!): Receipt @auth
+}
+
+extend type Mutation {
+  createReceipt(file: Upload!): MutationReceiptResponse! @auth
+}

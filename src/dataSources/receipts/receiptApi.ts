@@ -1,9 +1,17 @@
 import { RESTDataSource } from "apollo-datasource-rest";
-import { Receipt, ReceiptStatus } from "../../generated/graphql";
+import {
+  Receipt,
+  ReceiptStatus,
+  ReceiptResponse,
+  ReceiptFilter,
+} from "../../generated/graphql";
 import { services } from "../../config";
 import { IReceiptResponse, IReceipt, Ticket } from "./ReceiptTypes";
 import querystring from "querystring";
 
+type FilterRequest = {
+  filter?: string;
+};
 
 const account = "kster";
 
@@ -13,14 +21,25 @@ class ReceiptAPI extends RESTDataSource {
     this.baseURL = services.receiptUrl;
   }
 
-  async getReceipts(filter: string | null | undefined): Promise<Receipt[]> {
-    const filterQs: string = filter ? "?" + querystring.stringify({filter}) : "";
-    const receiptsResponse: IReceiptResponse = await this.get(`/receipt/${account}${filterQs}`);
-    return receiptsResponse.data.map((r) => ReceiptAPI.toReceipt(r));
+  async getReceipts(filter?: ReceiptFilter | null): Promise<ReceiptResponse> {
+    let filterQs: string = "";
+    let filterRequest: FilterRequest = {};
+    if (filter) {
+      if (filter.text) filterRequest.filter = filter.text;
+      filterQs = "?" + querystring.stringify(filterRequest);
+    }
+
+    const receiptsResponse: IReceiptResponse = await this.get(
+      `/receipt/${account}${filterQs}`
+    );
+    return {
+      totalCount: receiptsResponse.data ? receiptsResponse.data.length : 0,
+      receipts: receiptsResponse.data.map((r) => ReceiptAPI.toReceipt(r)),
+    };
   }
 
   async addReceipt(key: string) {
-    const body : Ticket = { key };
+    const body: Ticket = { key };
     const receipt = await this.post(`/ticket/${account}`, body);
 
     return ReceiptAPI.toReceipt(receipt);

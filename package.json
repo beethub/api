@@ -25,11 +25,11 @@
     "form-data": "^3.0.0",
     "format-currency": "^1.0.0",
     "graphql": "^15.0.0",
-    "graphql-import": "^1.0.2",
     "graphql-tools": "^5.0.0",
     "keycloak-connect": "^9.0.3",
     "keycloak-connect-graphql": "^0.4.0",
-    "lightship": "^6.1.0"
+    "lightship": "^6.1.0",
+    "merge-graphql-schemas": "^1.7.8"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.13.2",

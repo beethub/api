@@ -3,6 +3,7 @@ import MXCurrency from "./schema/scalar/currencyMX";
 import { QueryResolvers } from "./generated/graphql";
 import ReceiptAPI from "./dataSources/receipts/receiptApi";
 import FileDataSource from "./dataSources/fileDataSource";
+import ConfigurationAPI from "./dataSources/receipts/ConfigurationApi";
 
 interface Context {
   dataSources: DataSources;
@@ -11,12 +12,23 @@ interface Context {
 interface DataSources {
   receiptApi: ReceiptAPI;
   fileDataSource: FileDataSource;
+  configApi: ConfigurationAPI;
 }
 
 const Query: QueryResolvers<Context> = {
-  receipts: (_, args, { dataSources: { receiptApi } }: Context) => {
-    return receiptApi.getReceipts(args.filter);
+  receipts: async (_, args, { dataSources: { receiptApi } }: Context) => {
+    
+    return receiptApi.getReceipts(args.input);
   },
+  configuration: async (_, args, { dataSources: { configApi } }: Context) => {
+    return configApi.getConfiguration();
+  }
+};
+
+const timeDelay = (time: number) => {
+  return new Promise<void>((resolve, reject) => {
+    setTimeout(resolve, time);
+  });
 };
 
 const Mutation: MutationResolvers<Context> = {
@@ -43,6 +55,42 @@ const Mutation: MutationResolvers<Context> = {
       };
     }
   },
+  updateNotificationInvoiceResult: async (_, {input}, {dataSources: {configApi}}) => {
+    try {
+      const updated = await configApi.updateInvoiceResult(input);
+      return {
+        code: "200",
+        success: true,
+        message: "",
+        notification: updated
+      }
+    }
+    catch(error) {
+      return {
+        code: "500",
+        success: false,
+        message: error.message
+      }
+    }
+  },
+  updateInvoiceProfile: async (_, {input}, {dataSources: {configApi}}) => {
+    try {
+      const invoiceProfile = await configApi.updateInvoiceProfile(input);
+      return {
+        code: "200",
+        success: true,
+        message: "",
+        invoiceProfile
+      }
+    }
+    catch(error) {
+      return {
+        code: "500",
+        success: false,
+        message: error.message
+      }
+    }
+  }
 };
 
 const resolverMap: IResolvers = {

@@ -14,7 +14,109 @@ export type Scalars = {
 
 
 
+export type Notification = {
+   __typename?: 'Notification';
+  title?: Maybe<Scalars['String']>;
+  message?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  readed?: Maybe<Scalars['Boolean']>;
+};
 
+export type Configuration = {
+   __typename?: 'Configuration';
+  invoiceProfile?: Maybe<InvoiceProfile>;
+  notification?: Maybe<ConfigNotification>;
+};
+
+export type ConfigNotification = {
+   __typename?: 'ConfigNotification';
+  invoiceResult: Scalars['Boolean'];
+};
+
+export type InvoiceProfile = {
+   __typename?: 'InvoiceProfile';
+  rfc: Scalars['String'];
+  razonSocial: Scalars['String'];
+  direccion?: Maybe<Address>;
+};
+
+export type InputAdress = {
+  calle?: Maybe<Scalars['String']>;
+  numeroExterior?: Maybe<Scalars['String']>;
+  numeroInterior?: Maybe<Scalars['String']>;
+  colonia?: Maybe<Scalars['String']>;
+  codigoPostal?: Maybe<Scalars['String']>;
+};
+
+export type InvoiceProfileInput = {
+  rfc: Scalars['String'];
+  razonSocial: Scalars['String'];
+  direccion?: Maybe<InputAdress>;
+};
+
+export type Address = {
+   __typename?: 'Address';
+  calle?: Maybe<Scalars['String']>;
+  numeroExterior?: Maybe<Scalars['String']>;
+  numeroInterior?: Maybe<Scalars['String']>;
+  colonia?: Maybe<Scalars['String']>;
+  codigoPostal?: Maybe<Scalars['String']>;
+};
+
+export type MutationConfigNotification = MutationResponse & {
+   __typename?: 'MutationConfigNotification';
+  code: Scalars['String'];
+  success: Scalars['Boolean'];
+  message: Scalars['String'];
+  notification?: Maybe<ConfigNotification>;
+};
+
+export type MutationInvoiceProfile = MutationResponse & {
+   __typename?: 'MutationInvoiceProfile';
+  code: Scalars['String'];
+  success: Scalars['Boolean'];
+  message: Scalars['String'];
+  invoiceProfile?: Maybe<InvoiceProfile>;
+};
+
+export type Query = {
+   __typename?: 'Query';
+  configuration?: Maybe<Configuration>;
+  receipt?: Maybe<Receipt>;
+  receipts: ReceiptResponse;
+};
+
+
+export type QueryReceiptArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryReceiptsArgs = {
+  input?: Maybe<ReceiptFilter>;
+};
+
+export type Mutation = {
+   __typename?: 'Mutation';
+  createReceipt: MutationReceiptResponse;
+  updateInvoiceProfile?: Maybe<MutationInvoiceProfile>;
+  updateNotificationInvoiceResult?: Maybe<MutationConfigNotification>;
+};
+
+
+export type MutationCreateReceiptArgs = {
+  file: Scalars['Upload'];
+};
+
+
+export type MutationUpdateInvoiceProfileArgs = {
+  input: InvoiceProfileInput;
+};
+
+
+export type MutationUpdateNotificationInvoiceResultArgs = {
+  input: Scalars['Boolean'];
+};
 
 export type Receipt = {
    __typename?: 'Receipt';
@@ -40,6 +142,11 @@ export type Ticket = {
   url: Scalars['String'];
 };
 
+export enum Responsable {
+  User = 'USER',
+  System = 'SYSTEM'
+}
+
 export enum ReceiptStatus {
   InProgress = 'IN_PROGRESS',
   Generating = 'GENERATING',
@@ -47,17 +154,15 @@ export enum ReceiptStatus {
   Error = 'ERROR'
 }
 
-export type ReceiptConnection = {
-   __typename?: 'ReceiptConnection';
-  cursor: Scalars['String'];
-  hasMore: Scalars['Boolean'];
-  receipts: Array<Maybe<Receipt>>;
+export type ReceiptFilter = {
+  text?: Maybe<Scalars['String']>;
+  status?: Maybe<Array<Maybe<ReceiptStatus>>>;
 };
 
-export type MutationResponse = {
-  code: Scalars['String'];
-  success: Scalars['Boolean'];
-  message: Scalars['String'];
+export type ReceiptResponse = Response & {
+   __typename?: 'ReceiptResponse';
+  totalCount: Scalars['Int'];
+  receipts: Array<Maybe<Receipt>>;
 };
 
 export type MutationReceiptResponse = MutationResponse & {
@@ -68,37 +173,16 @@ export type MutationReceiptResponse = MutationResponse & {
   receipt?: Maybe<Receipt>;
 };
 
-export type File = {
-   __typename?: 'File';
-  filename: Scalars['String'];
-  mimetype: Scalars['String'];
-  encoding: Scalars['String'];
+
+
+export type MutationResponse = {
+  code: Scalars['String'];
+  success: Scalars['Boolean'];
+  message: Scalars['String'];
 };
 
-export type Query = {
-   __typename?: 'Query';
-  receipts: Array<Maybe<Receipt>>;
-  receipt?: Maybe<MutationReceiptResponse>;
-};
-
-
-export type QueryReceiptsArgs = {
-  filter?: Maybe<Scalars['String']>;
-};
-
-
-export type QueryReceiptArgs = {
-  id: Scalars['ID'];
-};
-
-export type Mutation = {
-   __typename?: 'Mutation';
-  createReceipt: MutationReceiptResponse;
-};
-
-
-export type MutationCreateReceiptArgs = {
-  file: Scalars['Upload'];
+export type Response = {
+  totalCount: Scalars['Int'];
 };
 
 
@@ -176,38 +260,62 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
-  MXCurrency: ResolverTypeWrapper<Scalars['MXCurrency']>,
-  Upload: ResolverTypeWrapper<Scalars['Upload']>,
-  Receipt: ResolverTypeWrapper<Receipt>,
+  Notification: ResolverTypeWrapper<Notification>,
+  Configuration: ResolverTypeWrapper<Configuration>,
+  ConfigNotification: ResolverTypeWrapper<ConfigNotification>,
+  InvoiceProfile: ResolverTypeWrapper<InvoiceProfile>,
+  InputAdress: InputAdress,
+  InvoiceProfileInput: InvoiceProfileInput,
+  Address: ResolverTypeWrapper<Address>,
+  MutationConfigNotification: ResolverTypeWrapper<MutationConfigNotification>,
+  MutationInvoiceProfile: ResolverTypeWrapper<MutationInvoiceProfile>,
+  Query: ResolverTypeWrapper<{}>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
+  Mutation: ResolverTypeWrapper<{}>,
+  Receipt: ResolverTypeWrapper<Receipt>,
   Invoice: ResolverTypeWrapper<Invoice>,
   Ticket: ResolverTypeWrapper<Ticket>,
+  Responsable: Responsable,
   ReceiptStatus: ReceiptStatus,
-  ReceiptConnection: ResolverTypeWrapper<ReceiptConnection>,
-  MutationResponse: ResolversTypes['MutationReceiptResponse'],
+  ReceiptFilter: ReceiptFilter,
+  ReceiptResponse: ResolverTypeWrapper<ReceiptResponse>,
+  Int: ResolverTypeWrapper<Scalars['Int']>,
   MutationReceiptResponse: ResolverTypeWrapper<MutationReceiptResponse>,
-  File: ResolverTypeWrapper<File>,
-  Query: ResolverTypeWrapper<{}>,
-  Mutation: ResolverTypeWrapper<{}>,
+  MXCurrency: ResolverTypeWrapper<Scalars['MXCurrency']>,
+  Upload: ResolverTypeWrapper<Scalars['Upload']>,
+  MutationResponse: ResolversTypes['MutationConfigNotification'] | ResolversTypes['MutationInvoiceProfile'] | ResolversTypes['MutationReceiptResponse'],
+  Response: ResolversTypes['ReceiptResponse'],
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   String: Scalars['String'],
   Boolean: Scalars['Boolean'],
-  MXCurrency: Scalars['MXCurrency'],
-  Upload: Scalars['Upload'],
-  Receipt: Receipt,
+  Notification: Notification,
+  Configuration: Configuration,
+  ConfigNotification: ConfigNotification,
+  InvoiceProfile: InvoiceProfile,
+  InputAdress: InputAdress,
+  InvoiceProfileInput: InvoiceProfileInput,
+  Address: Address,
+  MutationConfigNotification: MutationConfigNotification,
+  MutationInvoiceProfile: MutationInvoiceProfile,
+  Query: {},
   ID: Scalars['ID'],
+  Mutation: {},
+  Receipt: Receipt,
   Invoice: Invoice,
   Ticket: Ticket,
+  Responsable: Responsable,
   ReceiptStatus: ReceiptStatus,
-  ReceiptConnection: ReceiptConnection,
-  MutationResponse: ResolversParentTypes['MutationReceiptResponse'],
+  ReceiptFilter: ReceiptFilter,
+  ReceiptResponse: ReceiptResponse,
+  Int: Scalars['Int'],
   MutationReceiptResponse: MutationReceiptResponse,
-  File: File,
-  Query: {},
-  Mutation: {},
+  MXCurrency: Scalars['MXCurrency'],
+  Upload: Scalars['Upload'],
+  MutationResponse: ResolversParentTypes['MutationConfigNotification'] | ResolversParentTypes['MutationInvoiceProfile'] | ResolversParentTypes['MutationReceiptResponse'],
+  Response: ResolversParentTypes['ReceiptResponse'],
 };
 
 export type AuthDirectiveArgs = {  };
@@ -218,13 +326,68 @@ export type HasRoleDirectiveArgs = {   role?: Maybe<Array<Maybe<Scalars['String'
 
 export type HasRoleDirectiveResolver<Result, Parent, ContextType = any, Args = HasRoleDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export interface MxCurrencyScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['MXCurrency'], any> {
-  name: 'MXCurrency'
-}
+export type NotificationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Notification'] = ResolversParentTypes['Notification']> = {
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  readed?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
 
-export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
-  name: 'Upload'
-}
+export type ConfigurationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Configuration'] = ResolversParentTypes['Configuration']> = {
+  invoiceProfile?: Resolver<Maybe<ResolversTypes['InvoiceProfile']>, ParentType, ContextType>,
+  notification?: Resolver<Maybe<ResolversTypes['ConfigNotification']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
+
+export type ConfigNotificationResolvers<ContextType = any, ParentType extends ResolversParentTypes['ConfigNotification'] = ResolversParentTypes['ConfigNotification']> = {
+  invoiceResult?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
+
+export type InvoiceProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['InvoiceProfile'] = ResolversParentTypes['InvoiceProfile']> = {
+  rfc?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  razonSocial?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  direccion?: Resolver<Maybe<ResolversTypes['Address']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
+
+export type AddressResolvers<ContextType = any, ParentType extends ResolversParentTypes['Address'] = ResolversParentTypes['Address']> = {
+  calle?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  numeroExterior?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  numeroInterior?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  colonia?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  codigoPostal?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
+
+export type MutationConfigNotificationResolvers<ContextType = any, ParentType extends ResolversParentTypes['MutationConfigNotification'] = ResolversParentTypes['MutationConfigNotification']> = {
+  code?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  notification?: Resolver<Maybe<ResolversTypes['ConfigNotification']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
+
+export type MutationInvoiceProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['MutationInvoiceProfile'] = ResolversParentTypes['MutationInvoiceProfile']> = {
+  code?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  invoiceProfile?: Resolver<Maybe<ResolversTypes['InvoiceProfile']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
+
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  configuration?: Resolver<Maybe<ResolversTypes['Configuration']>, ParentType, ContextType>,
+  receipt?: Resolver<Maybe<ResolversTypes['Receipt']>, ParentType, ContextType, RequireFields<QueryReceiptArgs, 'id'>>,
+  receipts?: Resolver<ResolversTypes['ReceiptResponse'], ParentType, ContextType, RequireFields<QueryReceiptsArgs, never>>,
+};
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createReceipt?: Resolver<ResolversTypes['MutationReceiptResponse'], ParentType, ContextType, RequireFields<MutationCreateReceiptArgs, 'file'>>,
+  updateInvoiceProfile?: Resolver<Maybe<ResolversTypes['MutationInvoiceProfile']>, ParentType, ContextType, RequireFields<MutationUpdateInvoiceProfileArgs, 'input'>>,
+  updateNotificationInvoiceResult?: Resolver<Maybe<ResolversTypes['MutationConfigNotification']>, ParentType, ContextType, RequireFields<MutationUpdateNotificationInvoiceResultArgs, 'input'>>,
+};
 
 export type ReceiptResolvers<ContextType = any, ParentType extends ResolversParentTypes['Receipt'] = ResolversParentTypes['Receipt']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
@@ -250,18 +413,10 @@ export type TicketResolvers<ContextType = any, ParentType extends ResolversParen
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
-export type ReceiptConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['ReceiptConnection'] = ResolversParentTypes['ReceiptConnection']> = {
-  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  hasMore?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+export type ReceiptResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['ReceiptResponse'] = ResolversParentTypes['ReceiptResponse']> = {
+  totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   receipts?: Resolver<Array<Maybe<ResolversTypes['Receipt']>>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
-};
-
-export type MutationResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['MutationResponse'] = ResolversParentTypes['MutationResponse']> = {
-  __resolveType: TypeResolveFn<'MutationReceiptResponse', ParentType, ContextType>,
-  code?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
 };
 
 export type MutationReceiptResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['MutationReceiptResponse'] = ResolversParentTypes['MutationReceiptResponse']> = {
@@ -272,34 +427,45 @@ export type MutationReceiptResponseResolvers<ContextType = any, ParentType exten
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
-export type FileResolvers<ContextType = any, ParentType extends ResolversParentTypes['File'] = ResolversParentTypes['File']> = {
-  filename?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  mimetype?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  encoding?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+export interface MxCurrencyScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['MXCurrency'], any> {
+  name: 'MXCurrency'
+}
+
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload'
+}
+
+export type MutationResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['MutationResponse'] = ResolversParentTypes['MutationResponse']> = {
+  __resolveType: TypeResolveFn<'MutationConfigNotification' | 'MutationInvoiceProfile' | 'MutationReceiptResponse', ParentType, ContextType>,
+  code?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
 };
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  receipts?: Resolver<Array<Maybe<ResolversTypes['Receipt']>>, ParentType, ContextType, RequireFields<QueryReceiptsArgs, never>>,
-  receipt?: Resolver<Maybe<ResolversTypes['MutationReceiptResponse']>, ParentType, ContextType, RequireFields<QueryReceiptArgs, 'id'>>,
-};
-
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createReceipt?: Resolver<ResolversTypes['MutationReceiptResponse'], ParentType, ContextType, RequireFields<MutationCreateReceiptArgs, 'file'>>,
+export type ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['Response'] = ResolversParentTypes['Response']> = {
+  __resolveType: TypeResolveFn<'ReceiptResponse', ParentType, ContextType>,
+  totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {
-  MXCurrency?: GraphQLScalarType,
-  Upload?: GraphQLScalarType,
+  Notification?: NotificationResolvers<ContextType>,
+  Configuration?: ConfigurationResolvers<ContextType>,
+  ConfigNotification?: ConfigNotificationResolvers<ContextType>,
+  InvoiceProfile?: InvoiceProfileResolvers<ContextType>,
+  Address?: AddressResolvers<ContextType>,
+  MutationConfigNotification?: MutationConfigNotificationResolvers<ContextType>,
+  MutationInvoiceProfile?: MutationInvoiceProfileResolvers<ContextType>,
+  Query?: QueryResolvers<ContextType>,
+  Mutation?: MutationResolvers<ContextType>,
   Receipt?: ReceiptResolvers<ContextType>,
   Invoice?: InvoiceResolvers<ContextType>,
   Ticket?: TicketResolvers<ContextType>,
-  ReceiptConnection?: ReceiptConnectionResolvers<ContextType>,
-  MutationResponse?: MutationResponseResolvers,
+  ReceiptResponse?: ReceiptResponseResolvers<ContextType>,
   MutationReceiptResponse?: MutationReceiptResponseResolvers<ContextType>,
-  File?: FileResolvers<ContextType>,
-  Query?: QueryResolvers<ContextType>,
-  Mutation?: MutationResolvers<ContextType>,
+  MXCurrency?: GraphQLScalarType,
+  Upload?: GraphQLScalarType,
+  MutationResponse?: MutationResponseResolvers,
+  Response?: ResponseResolvers,
 };
 
 

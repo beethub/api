@@ -8,6 +8,7 @@ import schema from "./schema";
 import ReceiptAPI from "./dataSources/receipts/receiptApi";
 import App from "./app";
 import FileDataSource from "./dataSources/fileDataSource";
+import ConfigurationAPI from "./dataSources/receipts/ConfigurationApi";
 
 const keycloak: Keycloak.Keycloak = new Keycloak({ scope: "openid" }, kcConfig as any);
 
@@ -22,8 +23,9 @@ const graphqlServer: ApolloServer = new ApolloServer({
   },
   dataSources: () => ({
     receiptApi: new ReceiptAPI(),
-    fileDataSource: new FileDataSource()
-  }),
+    fileDataSource: new FileDataSource(),
+    configApi: new ConfigurationAPI()
+  })
 });
 
 graphqlServer.applyMiddleware({ app: app.app });

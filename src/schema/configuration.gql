@@ -1,0 +1,59 @@
+type Configuration {
+  invoiceProfile: InvoiceProfile
+  notification: ConfigNotification
+}
+
+type ConfigNotification {
+  invoiceResult: Boolean!
+}
+
+type InvoiceProfile {
+  rfc: String!
+  razonSocial: String!
+  direccion: Address
+}
+
+input InputAdress {
+  calle: String
+  numeroExterior: String
+  numeroInterior: String
+  colonia: String
+  codigoPostal: String
+}
+
+input InvoiceProfileInput {
+  rfc: String!
+  razonSocial: String!
+  direccion: InputAdress
+}
+
+type Address {
+  calle: String
+  numeroExterior: String
+  numeroInterior: String
+  colonia: String
+  codigoPostal: String
+}
+
+type MutationConfigNotification implements MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  notification: ConfigNotification
+}
+
+type MutationInvoiceProfile implements MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  invoiceProfile: InvoiceProfile
+}
+
+extend type Query {
+  configuration: Configuration
+}
+
+extend type Mutation {
+  updateNotificationInvoiceResult(input: Boolean!): MutationConfigNotification
+  updateInvoiceProfile(input: InvoiceProfileInput!): MutationInvoiceProfile
+}
