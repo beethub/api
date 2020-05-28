@@ -38,6 +38,21 @@ class ReceiptAPI extends RESTDataSource {
     };
   }
 
+  //TODO: Implement getReceiptById
+  async getReceipt(id: String):Promise<Receipt>{
+    return  {
+      id:""+id,
+      business: "Oxxo Gas",
+      date: "2020-02-28",
+      amount: 15000,
+      createdAt: "2020-02-28T13:00:00",
+      createdDate: "2020-02-28",
+      ticket: { url: `/file/ticket/1` },
+      invoice: null,
+      status: ReceiptStatus.InProgress,
+    }
+  }
+
   async addReceipt(key: string) {
     const body: Ticket = { key };
     const receipt = await this.post(`/ticket/${account}`, body);

@@ -1,9 +1,11 @@
-import { IResolvers, MutationResolvers } from "./generated/graphql";
+import { IResolvers, MutationResolvers, NotificationResolvers } from "./generated/graphql";
 import MXCurrency from "./schema/scalar/currencyMX";
 import { QueryResolvers } from "./generated/graphql";
 import ReceiptAPI from "./dataSources/receipts/receiptApi";
 import FileDataSource from "./dataSources/fileDataSource";
-import ConfigurationAPI from "./dataSources/receipts/ConfigurationApi";
+import ConfigurationAPI from "./dataSources/configurationApi";
+import NotificationAPI from "./dataSources/notificationApi";
+import NotFoundError from "./error/NotFoundError";
 
 interface Context {
   dataSources: DataSources;
@@ -13,6 +15,7 @@ interface DataSources {
   receiptApi: ReceiptAPI;
   fileDataSource: FileDataSource;
   configApi: ConfigurationAPI;
+  notificationApi: NotificationAPI;
 }
 
 const Query: QueryResolvers<Context> = {
@@ -22,8 +25,23 @@ const Query: QueryResolvers<Context> = {
   },
   configuration: async (_, args, { dataSources: { configApi } }: Context) => {
     return configApi.getConfiguration();
+  },
+  notifications: async (_, {input}, {dataSources: { notificationApi } }: Context) => {
+    await timeDelay(3000);
+    //console.log("query notifications",input);
+    return notificationApi.getNotification(input);
+  },
+  unreadNotifications: async (_, __, {dataSources: { notificationApi }}:Context) => {
+    return notificationApi.getUnreadNotificationsCount();
   }
 };
+
+const Notification: NotificationResolvers<Context> = {
+  receipt: async (parent, _, { dataSources: { receiptApi } }: Context) => {
+    //console.log("notifications receipt",parent, _);
+    return receiptApi.getReceipt("1");
+  }
+}
 
 const timeDelay = (time: number) => {
   return new Promise<void>((resolve, reject) => {
@@ -67,11 +85,13 @@ const Mutation: MutationResolvers<Context> = {
     }
     catch(error) {
       console.error(error);
-      return {
-        code: "500",
-        success: false,
-        message: error.message
-      }
+      
+        return {
+          code: "500",
+          success: false,
+          message: error.message
+        }
+      
     }
   },
   updateInvoiceProfile: async (_, {input}, {dataSources: {configApi}}) => {
@@ -92,12 +112,40 @@ const Mutation: MutationResolvers<Context> = {
         message: error.message
       }
     }
+  },
+  readNotification: async (_, {input}, {dataSources: {notificationApi}}) => {
+    try {
+      input
+      const notification = await notificationApi.readNotification(input);
+      return {
+        code: "200",
+        success: true,
+        message: "",
+        notification
+      }
+    }catch(error) {
+      console.error(error);
+      
+      if(error instanceof NotFoundError){
+        return {
+          code: "400",
+          success: false,
+          message: error.message
+        }
+      }
+      return {
+        code:"500",
+        success: false,
+        message: error.message
+      }
+    }
   }
 };
 
 const resolverMap: IResolvers = {
   MXCurrency: MXCurrency,
   Query,
+  Notification,
   Mutation,
 };
 

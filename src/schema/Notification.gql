@@ -1,6 +1,0 @@
-type Notification {
-  title: String
-  message: String
-  date: String
-  readed: Boolean
-}

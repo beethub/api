@@ -8,9 +8,13 @@ import schema from "./schema";
 import ReceiptAPI from "./dataSources/receipts/receiptApi";
 import App from "./app";
 import FileDataSource from "./dataSources/fileDataSource";
-import ConfigurationAPI from "./dataSources/receipts/ConfigurationApi";
+import ConfigurationAPI from "./dataSources/configurationApi";
+import NotificationAPI from "./dataSources/notificationApi";
 
-const keycloak: Keycloak.Keycloak = new Keycloak({ scope: "openid" }, kcConfig as any);
+const keycloak: Keycloak.Keycloak = new Keycloak(
+  { scope: "openid" },
+  kcConfig as any
+);
 
 const app = new App(4000, keycloak);
 
@@ -24,23 +28,24 @@ const graphqlServer: ApolloServer = new ApolloServer({
   dataSources: () => ({
     receiptApi: new ReceiptAPI(),
     fileDataSource: new FileDataSource(),
-    configApi: new ConfigurationAPI()
-  })
+    configApi: new ConfigurationAPI(),
+    notificationApi: new NotificationAPI()
+  }),
 });
 
 graphqlServer.applyMiddleware({ app: app.app });
 
 const shutDownTime = 20 * 1000;
-const lightship = createLightship({shutdownHandlerTimeout: shutDownTime});
+const lightship = createLightship({ shutdownHandlerTimeout: shutDownTime });
 
-app.listen().then(server =>{
-  lightship.signalReady(); 
+app.listen().then((server) => {
+  lightship.signalReady();
   lightship.registerShutdownHandler(async () => {
-    await new Promise((resolve, reject) =>{
+    await new Promise((resolve, reject) => {
       setTimeout(() => {
-       resolve 
+        resolve;
       }, shutDownTime);
     });
     server.close();
-  });  
+  });
 });

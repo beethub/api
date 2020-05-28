@@ -1,0 +1,33 @@
+type Notification {
+  id: ID!
+  title: String!
+  message: String!
+  date: String!
+  read: Boolean!
+  receipt: Receipt
+}
+
+type NotificationResponse implements Response{
+  totalCount: Int!
+  notifications: [Notification]!
+}
+
+type MutationReadNotification implements MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  notification: Notification
+}
+
+input NotificationFilter {
+  receiptId: ID
+  read: Boolean
+}
+
+extend type Query {
+  notifications(input: NotificationFilter): NotificationResponse! 
+  unreadNotifications: Int! @auth
+}
+extend type Mutation {
+  readNotification(input: ID!): MutationReadNotification! @auth
+}

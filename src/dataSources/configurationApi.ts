@@ -1,14 +1,19 @@
 import { RESTDataSource } from "apollo-datasource-rest";
-import { Configuration, MutationConfigNotification, ConfigNotification, InvoiceProfileInput, InvoiceProfile } from "../../generated/graphql";
+import {
+  Configuration,
+  ConfigNotification,
+  InvoiceProfileInput,
+  InvoiceProfile,
+} from "../generated/graphql";
 
 const config: Configuration = {
   notification: {
-    invoiceResult: true
-  }
-}
+    invoiceResult: true,
+  },
+};
 
 class ConfigurationAPI extends RESTDataSource {
-  constructor(){
+  constructor() {
     super();
   }
 
@@ -16,17 +21,20 @@ class ConfigurationAPI extends RESTDataSource {
     return config;
   }
 
-  async updateInvoiceResult (updateResult: boolean): Promise<ConfigNotification> {
-    const updatedConfig: ConfigNotification = {invoiceResult: updateResult};
+  async updateInvoiceResult(
+    updateResult: boolean
+  ): Promise<ConfigNotification> {
+    const updatedConfig: ConfigNotification = { invoiceResult: updateResult };
     config.notification = updatedConfig;
     return config.notification;
   }
 
-  async updateInvoiceProfile ( invoiceProfile: InvoiceProfileInput): Promise<InvoiceProfile> {
+  async updateInvoiceProfile(
+    invoiceProfile: InvoiceProfileInput
+  ): Promise<InvoiceProfile> {
     config.invoiceProfile = invoiceProfile;
     return config.invoiceProfile;
   }
-
 }
 
 export default ConfigurationAPI;
