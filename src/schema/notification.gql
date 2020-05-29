@@ -25,7 +25,7 @@ input NotificationFilter {
 }
 
 extend type Query {
-  notifications(input: NotificationFilter): NotificationResponse! 
+  notifications(input: NotificationFilter): NotificationResponse! @auth
   unreadNotifications: Int! @auth
 }
 extend type Mutation {
