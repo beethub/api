@@ -74,10 +74,16 @@ export type MutationInvoiceProfile = MutationResponse & {
 export type Query = {
    __typename?: 'Query';
   configuration?: Maybe<Configuration>;
+  notification: NotificationResponse;
   notifications: NotificationResponse;
   receipt?: Maybe<Receipt>;
   receipts: ReceiptResponse;
   unreadNotifications: Scalars['Int'];
+};
+
+
+export type QueryNotificationArgs = {
+  input: Scalars['ID'];
 };
 
 
@@ -411,6 +417,7 @@ export type MutationInvoiceProfileResolvers<ContextType = any, ParentType extend
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   configuration?: Resolver<Maybe<ResolversTypes['Configuration']>, ParentType, ContextType>,
+  notification?: Resolver<ResolversTypes['NotificationResponse'], ParentType, ContextType, RequireFields<QueryNotificationArgs, 'input'>>,
   notifications?: Resolver<ResolversTypes['NotificationResponse'], ParentType, ContextType, RequireFields<QueryNotificationsArgs, never>>,
   receipt?: Resolver<Maybe<ResolversTypes['Receipt']>, ParentType, ContextType, RequireFields<QueryReceiptArgs, 'id'>>,
   receipts?: Resolver<ResolversTypes['ReceiptResponse'], ParentType, ContextType, RequireFields<QueryReceiptsArgs, never>>,

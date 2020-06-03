@@ -111,7 +111,7 @@ class NotificationAPI extends RESTDataSource {
     super();
   }
 
-  async getNotification(input?: NotificationFilter| null): Promise<NotificationResponse> {
+  async getNotifications(input?: NotificationFilter| null): Promise<NotificationResponse> {
     let result = notifications;
     if(input) {
       if(input.read){
@@ -128,6 +128,14 @@ class NotificationAPI extends RESTDataSource {
       totalCount: result.length,
       notifications: result
     };
+  }
+
+  async getNotification(id: String): Promise<NotificationResponse> {
+    const notification = notifications.filter(n => n.id === id);
+    return {
+      totalCount: notification.length,
+      notifications: notification
+    }
   }
 
   async getUnreadNotificationsCount(): Promise<number>{

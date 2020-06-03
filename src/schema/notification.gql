@@ -7,7 +7,7 @@ type Notification {
   receipt: Receipt
 }
 
-type NotificationResponse implements Response{
+type NotificationResponse implements Response {
   totalCount: Int!
   notifications: [Notification]!
 }
@@ -26,6 +26,7 @@ input NotificationFilter {
 
 extend type Query {
   notifications(input: NotificationFilter): NotificationResponse! @auth
+  notification(input: ID!): NotificationResponse! @auth
   unreadNotifications: Int! @auth
 }
 extend type Mutation {

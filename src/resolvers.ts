@@ -29,7 +29,11 @@ const Query: QueryResolvers<Context> = {
   notifications: async (_, {input}, {dataSources: { notificationApi } }: Context) => {
     await timeDelay(3000);
     //console.log("query notifications",input);
-    return notificationApi.getNotification(input);
+    return notificationApi.getNotifications(input);
+  },
+  notification: async (_, args, { dataSources: { notificationApi}}: Context) => {
+    await timeDelay(3000);
+    return notificationApi.getNotification(args.input);
   },
   unreadNotifications: async (_, __, {dataSources: { notificationApi }}:Context) => {
     return notificationApi.getUnreadNotificationsCount();
