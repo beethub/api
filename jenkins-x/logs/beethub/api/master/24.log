@@ -1,0 +1,220 @@
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-credential-initializer-x4qrr[0m
+{"level":"info","ts":1592680729.180893,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/refs/heads/0.8.0-ns-support: no such file or directory"}
+{"level":"info","ts":1592680729.181851,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-working-dir-initializer-2pfwg[0m
+{"level":"info","ts":1592680730.2336745,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1592680730.23822,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-place-tools[0m
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-git-source-beethub-api-master-release-2qvd9-d28z5[0m
+{"level":"info","ts":1592680737.3062172,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/refs/heads/0.8.0-ns-support: no such file or directory"}
+{"level":"info","ts":1592680737.6165402,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/beethub/api.git @ v0.0.23 in path /workspace/source"}
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-git-merge[0m
+Using SHAs from PULL_REFS=master:b3c0a55f159736416eb5ad558b1aa6bc5f9254e3
+WARNING: no SHAs to merge, falling back to initial cloned commit
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-setup-jx-git-credentials[0m
+Generated Git credentials file /workspace/xdg_config/git/credentials
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npmrc-ts[0m
+Command "credential" is deprecated, it will be removed on Jun 1 2020.  This is replaced by Tekton's mounted secrets
+WARNING: failed to find Secret npm-token in namespace **
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npm-install-ts[0m
+
+> chromedriver@81.0.0 install /workspace/source/node_modules/chromedriver
+> node install.js
+
+Current existing ChromeDriver binary is unavailable, proceeding with download and extraction.
+Downloading from file:  https://chromedriver.storage.googleapis.com/81.0.4044.69/chromedriver_linux64.zip
+Saving to file: /tmp/81.0.4044.69/chromedriver/chromedriver_linux64.zip
+Received 1024K...
+Received 2062K...
+Received 3102K...
+Received 4142K...
+Received 4840K total.
+Extracting zip contents.
+Copying to target path /workspace/source/node_modules/chromedriver/lib/chromedriver
+Fixing file permissions.
+Done. ChromeDriver binary available at /workspace/source/node_modules/chromedriver/lib/chromedriver/chromedriver
+
+> core-js@3.6.5 postinstall /workspace/source/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+
+> core-js@2.6.11 postinstall /workspace/source/node_modules/fbjs/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+
+> @apollo/protobufjs@1.0.4 postinstall /workspace/source/node_modules/@apollo/protobufjs
+> node scripts/postinstall
+
+
+> nodemon@2.0.3 postinstall /workspace/source/node_modules/nodemon
+> node bin/postinstall || exit 0
+
+[32mLove nodemon? You can now support the project via the open collective:[22m[39m
+ > [96m[1mhttps://opencollective.com/nodemon/donate[0m
+
+npm WARN api@1.0.0 No repository field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.1.2 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 896 packages from 605 contributors and audited 901 packages in 15.527s
+found 0 vulnerabilities
+
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npm-test-ts[0m
+
+> api@1.0.0 test /workspace/source
+> echo "DEBUG: no test specified" && exit 0
+
+DEBUG: no test specified
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-build-transpile-ts-to-js[0m
+
+> api@1.0.0 build /workspace/source
+> tsc && npm run copy-static-assets
+
+
+> api@1.0.0 copy-static-assets /workspace/source
+> ts-node copyStaticAssets.ts
+
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-build-container-build-ts[0m
+E0620 19:19:28.355888      10 aws_credentials.go:77] while getting AWS credentials NoCredentialProviders: no valid providers in chain. Deprecated.
+	For verbose messaging see aws.Config.CredentialsChainVerboseErrors
+[36mINFO[0m[0001] Using dockerignore file: /workspace/source/.dockerignore 
+[36mINFO[0m[0001] Retrieving image manifest node:10-slim       
+[36mINFO[0m[0001] Retrieving image manifest node:10-slim       
+[36mINFO[0m[0001] Built cross stage deps: map[]                
+[36mINFO[0m[0001] Retrieving image manifest node:10-slim       
+[36mINFO[0m[0001] Retrieving image manifest node:10-slim       
+[36mINFO[0m[0002] Executing 0 build triggers                   
+[36mINFO[0m[0002] cmd: EXPOSE                                  
+[36mINFO[0m[0002] Adding exposed port: 4000/tcp                
+[36mINFO[0m[0002] Checking for cached layer docker.io/todo/cache:e0666f6855424eadd7c7899bf4920a8104efc73165c034b1e048a295c8a8eb2c... 
+[36mINFO[0m[0002] No cached layer found for cmd COPY package-lock.json package.json ./ 
+[36mINFO[0m[0002] Unpacking rootfs as cmd COPY package-lock.json package.json ./ requires it. 
+[36mINFO[0m[0005] ENV PORT 4000                                
+[36mINFO[0m[0005] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0005] EXPOSE 4000                                  
+[36mINFO[0m[0005] cmd: EXPOSE                                  
+[36mINFO[0m[0005] Adding exposed port: 4000/tcp                
+[36mINFO[0m[0005] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0005] WORKDIR /usr/src/app                         
+[36mINFO[0m[0005] cmd: workdir                                 
+[36mINFO[0m[0005] Changed working directory to /usr/src/app    
+[36mINFO[0m[0005] Creating directory /usr/src/app              
+[36mINFO[0m[0005] Resolving 1 paths                            
+[36mINFO[0m[0005] Taking snapshot of files...                  
+[36mINFO[0m[0005] ENV  NODE_ENV production                     
+[36mINFO[0m[0005] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0005] COPY package-lock.json package.json ./       
+[36mINFO[0m[0005] Resolving 2 paths                            
+[36mINFO[0m[0005] Taking snapshot of files...                  
+[36mINFO[0m[0005] RUN npm install --production                 
+[36mINFO[0m[0005] Taking snapshot of full filesystem...        
+[36mINFO[0m[0005] Pushing layer docker.io/todo/cache:e0666f6855424eadd7c7899bf4920a8104efc73165c034b1e048a295c8a8eb2c to cache now 
+[36mINFO[0m[0005] Resolving 10216 paths                        
+[36mINFO[0m[0006] cmd: /bin/sh                                 
+[36mINFO[0m[0006] args: [-c npm install --production]          
+[36mINFO[0m[0006] Running: [/bin/sh -c npm install --production] 
+
+> chromedriver@81.0.0 install /usr/src/app/node_modules/chromedriver
+> node install.js
+
+Current existing ChromeDriver binary is unavailable, proceeding with download and extraction.
+Downloading from file:  https://chromedriver.storage.googleapis.com/81.0.4044.69/chromedriver_linux64.zip
+Saving to file: /tmp/81.0.4044.69/chromedriver/chromedriver_linux64.zip
+Received 1040K...
+Received 2080K...
+Received 3120K...
+Received 4160K...
+Received 4840K total.
+Extracting zip contents.
+Copying to target path /usr/src/app/node_modules/chromedriver/lib/chromedriver
+Fixing file permissions.
+Done. ChromeDriver binary available at /usr/src/app/node_modules/chromedriver/lib/chromedriver/chromedriver
+
+> core-js@3.6.5 postinstall /usr/src/app/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+[96mThank you for using core-js ([94m https://github.com/zloirock/core-js [96m) for polyfilling JavaScript standard library![0m
+
+[96mThe project needs your help! Please consider supporting of core-js on Open Collective or Patreon: [0m
+[96m>[94m https://opencollective.com/core-js [0m
+[96m>[94m https://www.patreon.com/zloirock [0m
+
+[96mAlso, the author of core-js ([94m https://github.com/zloirock [96m) is looking for a good job -)[0m
+
+
+> @apollo/protobufjs@1.0.4 postinstall /usr/src/app/node_modules/@apollo/protobufjs
+> node scripts/postinstall
+
+npm WARN api@1.0.0 No repository field.
+
+added 303 packages from 292 contributors and audited 901 packages in 8.051s
+
+23 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+[36mINFO[0m[0015] Taking snapshot of full filesystem...        
+[36mINFO[0m[0015] Resolving 21565 paths                        
+[36mINFO[0m[0019] Pushing layer docker.io/todo/cache:c0ed32d7c3563e979cc55e8c2379b984ca70a5eff027f5dadd15f71d83054e24 to cache now 
+[36mINFO[0m[0019] COPY dist/ .                                 
+[36mINFO[0m[0019] Resolving 29 paths                           
+[36mINFO[0m[0019] Taking snapshot of files...                  
+[36mINFO[0m[0019] CMD ["node", "server.js"]                    
+[36mINFO[0m[0019] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0019] Pushing layer docker.io/todo/cache:193b7a8053e194e2e1db102729ca799a9a786e35f6e7fd68731072dc8c2b3a44 to cache now 
+[33mWARN[0m[0019] error uploading layer to cache: failed to push to destination docker.io/todo/cache:e0666f6855424eadd7c7899bf4920a8104efc73165c034b1e048a295c8a8eb2c: HEAD https://index.docker.io/v2/todo/cache/blobs/sha256:a1e29c2c07566f5b70d6fd984303287c45a6313f3fd852322223c505769d36f5: unsupported status code 401 
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-build-post-build-ts[0m
+no CVE provider running in the current ** namespace so skip adding image to be analysed
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-promote-changelog[0m
+Converted /workspace/source/charts/api to an unshallow repository
+Generating change log from git ref 26ee521271ca6eac6d3152072511c03292dacd3b => 13a03e515306003945a265304e719aa520398d38
+Associating user x-0 in users.jenkins.io with email cesarac66@hotmail.com to git GitProvider user with login -0 as emails match
+Adding label jenkins.io/git-github-userid=-0 to user x-0 in users.jenkins.io
+WARNING: Failed to enrich commit b3c0a55f159736416eb5ad558b1aa6bc5f9254e3 with issues: User.jenkins.io "x-0" is invalid: metadata.labels: Invalid value: "-0": a valid label must be an empty string or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyValue',  or 'my_value',  or '12345', regex used for validation is '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?')
+Associating user x-0 in users.jenkins.io with email cesarac66@hotmail.com to git GitProvider user with login -0 as emails match
+Adding label jenkins.io/git-github-userid=-0 to user x-0 in users.jenkins.io
+WARNING: Failed to enrich commit b3c0a55f159736416eb5ad558b1aa6bc5f9254e3 with issues: User.jenkins.io "x-0" is invalid: metadata.labels: Invalid value: "-0": a valid label must be an empty string or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyValue',  or 'my_value',  or '12345', regex used for validation is '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?')
+Finding issues in commit messages using git format
+WARNING: No release found for beethub/api and tag v0.0.23 so creating a new release
+Updated the release information at https://github.com/beethub/api/releases/tag/v0.0.23
+generated: /workspace/source/charts/api/templates/release.yaml
+Created Release api-0-0-23 resource in namespace **
+Updating PipelineActivity beethub-api-master-24 with version 0.0.23
+Updated PipelineActivities beethub-api-master-24 with release notes URL: https://github.com/beethub/api/releases/tag/v0.0.23
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-promote-helm-release[0m
+WARNING: No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: storage.googleapis.com https://storage.googleapis.com/chartmuseum.jenkins-x.io
+Successfully added Helm repository storage.googleapis.com.
+Adding missing Helm repo: jenkins-x-chartmuseum http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository jenkins-x-chartmuseum.
+WARNING: No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file api-0.0.23.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 201 response: {"saved":true}
+
+Showing logs for build [32mbeethub-api-master-release-2qvd9-24[0m stage [32mfrom-build-pack[0m and container [32mstep-promote-jx-promote[0m
+WARNING: prow based install so skip waiting for the merge of Pull Requests to go green as currently there is an issue with gettingstatuses from the PR, see https://github.com/jenkins-x/**/issues/2410
+WARNING: No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Promoting app api version 0.0.23 to namespace **-staging
+Created Pull Request: https://github.com/beethub/environment-beet-k8s-1-staging/pull/57
+Added label updatebot to Pull Request https://github.com/beethub/environment-beet-k8s-1-staging/pull/57
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/57
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/57
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/57
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/57
+Pull Request https://github.com/beethub/environment-beet-k8s-1-staging/pull/57 is merged at sha 234a78e4a4ddce0369ced2d69969c5a3d5978a4e
+Pull Request merged but we are not waiting for the update pipeline to complete!
