@@ -50,7 +50,7 @@ type MutationReceiptResponse implements MutationResponse {
 
 extend type Query {
   receipts(input: ReceiptFilter): ReceiptResponse! @auth
-  receipt(id: ID!): Receipt @auth
+  receipt(input: ID!): ReceiptResponse! @auth
 }
 
 extend type Mutation {

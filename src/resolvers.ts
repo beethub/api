@@ -1,4 +1,4 @@
-import { IResolvers, MutationResolvers, NotificationResolvers } from "./generated/graphql";
+import { IResolvers, MutationResolvers, NotificationResolvers, Receipt } from "./generated/graphql";
 import MXCurrency from "./schema/scalar/currencyMX";
 import { QueryResolvers } from "./generated/graphql";
 import ReceiptAPI from "./dataSources/receipts/receiptApi";
@@ -20,8 +20,18 @@ interface DataSources {
 
 const Query: QueryResolvers<Context> = {
   receipts: async (_, args, { dataSources: { receiptApi } }: Context) => {
-    
     return receiptApi.getReceipts(args.input);
+  },
+  receipt: async (_, args, { dataSources: { receiptApi } }: Context) => {
+    const receipts: Receipt[] = [];
+    const receipt = await receiptApi.getReceipt(args.input);
+    if(receipt)
+      receipts.push(receipt);
+    return {
+      totalCount: receipts.length,
+      receipts: receipts
+    }
+
   },
   configuration: async (_, args, { dataSources: { configApi } }: Context) => {
     return configApi.getConfiguration();

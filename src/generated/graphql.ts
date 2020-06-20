@@ -76,7 +76,7 @@ export type Query = {
   configuration?: Maybe<Configuration>;
   notification: NotificationResponse;
   notifications: NotificationResponse;
-  receipt?: Maybe<Receipt>;
+  receipt: ReceiptResponse;
   receipts: ReceiptResponse;
   unreadNotifications: Scalars['Int'];
 };
@@ -93,7 +93,7 @@ export type QueryNotificationsArgs = {
 
 
 export type QueryReceiptArgs = {
-  id: Scalars['ID'];
+  input: Scalars['ID'];
 };
 
 
@@ -419,7 +419,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   configuration?: Resolver<Maybe<ResolversTypes['Configuration']>, ParentType, ContextType>,
   notification?: Resolver<ResolversTypes['NotificationResponse'], ParentType, ContextType, RequireFields<QueryNotificationArgs, 'input'>>,
   notifications?: Resolver<ResolversTypes['NotificationResponse'], ParentType, ContextType, RequireFields<QueryNotificationsArgs, never>>,
-  receipt?: Resolver<Maybe<ResolversTypes['Receipt']>, ParentType, ContextType, RequireFields<QueryReceiptArgs, 'id'>>,
+  receipt?: Resolver<ResolversTypes['ReceiptResponse'], ParentType, ContextType, RequireFields<QueryReceiptArgs, 'input'>>,
   receipts?: Resolver<ResolversTypes['ReceiptResponse'], ParentType, ContextType, RequireFields<QueryReceiptsArgs, never>>,
   unreadNotifications?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
 };
