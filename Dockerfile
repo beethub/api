@@ -1,12 +1,18 @@
-FROM node:10-slim
+FROM node:10-slim as build
+WORKDIR /usr/app
+
+COPY package-lock.json package.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+
+FROM node:10-slim as runtime
 ENV PORT 4000
 EXPOSE 4000
-#RUN groupadd -r nodejs && useradd -m -r -g -s /bin/bash nodejs nodejs
-#USER nodejs
-#WORKDIR /home/nodejs/app
-WORKDIR /usr/src/app
-ENV  NODE_ENV production
-COPY package-lock.json package.json ./
+WORKDIR /usr/app
 RUN npm install --production
-COPY dist/ .
+ENV  NODE_ENV production
+COPY --from=build /usr/app/package-lock.json /usr/app/package.json ./
+COPY --from=build /usr/app/dist/ .
 CMD ["node", "server.js"]

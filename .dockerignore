@@ -4,11 +4,10 @@ NOTICE
 LICENSE
 README.md
 node_modules/
-src/
 .git/
 .gitignore/
 codegen.yml
-copyStaticAssets.ts
+
 graphql.schema.json
 .helmignore
 jenkins-x.yml
