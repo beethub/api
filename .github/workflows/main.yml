@@ -25,9 +25,9 @@ jobs:
         uses: codacy/git-version@2.2.0
       
       - name: print Version
-        run: echo ${{steps.version.version}} 
+        run: echo $VERSION
           
-      - run: echo ${{steps.version.previous-version}}
+
       
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v1
