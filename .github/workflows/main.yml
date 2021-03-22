@@ -23,9 +23,13 @@ jobs:
       - name: Git Version
         id: get-version
         uses: codacy/git-version@2.2.0
+        with:
+          prefix: v
       
       - name: print Version
         run: echo ${{ steps.get-version.outputs.version }}
+      - name: print prev-Version
+        run: echo ${{ steps.get-version.outputs.previous-version }}
           
 
       
