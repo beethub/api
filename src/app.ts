@@ -30,7 +30,7 @@ class App {
   public listen() : Promise<Server> {
     return new Promise( (resolve) => {
       const server = this._app.listen(this._port, () => {
-        console.log(`🚀 Server ready on the port ${this._port}`);
+        console.log(`🚀 Server ready on the port ${this._port}!`);
         resolve(server);
       });
     } )
