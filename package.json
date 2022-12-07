@@ -32,7 +32,7 @@
     "merge-graphql-schemas": "^1.7.8"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.13.2",
+    "@graphql-codegen/cli": "^1.21.8",
     "@graphql-codegen/introspection": "1.13.2",
     "@graphql-codegen/typescript": "1.13.2",
     "@graphql-codegen/typescript-resolvers": "1.13.2",
